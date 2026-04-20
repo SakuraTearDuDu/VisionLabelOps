@@ -29,6 +29,7 @@ All writes for this repository must stay within `D:\github_test_VisionLabelOps`.
 - Decision: use one source version file plus setuptools dynamic metadata instead of `setuptools-scm` to avoid a heavier release chain for a small repository
 - Decision: keep public APIs path-first and reserve dataset-first usage for core service functions to reduce ambiguity between CLI and Python examples
 - Decision: add a macOS smoke job so the existing macOS classifier remains honest; the cost is low and the public signal is worth it
+- Decision: upgrade GitHub Actions to `actions/checkout@v6` and `actions/setup-python@v6` after remote checks surfaced Node 20 deprecation warnings, so CI stays ahead of the June 2026 runtime cutover
 - Deferred: broader YOLO layout flexibility remains a later candidate rather than a V1 hardening task, because this round prioritizes stable behavior over wider heuristics
 
 ## Notes for future entries
