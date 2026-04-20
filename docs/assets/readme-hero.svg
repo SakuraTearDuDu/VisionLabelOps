@@ -1,0 +1,82 @@
+<svg width="1280" height="420" viewBox="0 0 1280 420" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">VisionLabelOps hero banner</title>
+  <desc id="desc">A lightweight, detection-first toolkit for computer vision dataset audit, conversion, statistics, splits, previews, and reports.</desc>
+  <defs>
+    <linearGradient id="heroBg" x1="78" y1="42" x2="1202" y2="378" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F8FBFF"/>
+      <stop offset="0.55" stop-color="#FFFFFF"/>
+      <stop offset="1" stop-color="#F5FBF8"/>
+    </linearGradient>
+    <linearGradient id="accentBlue" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#2563EB"/>
+      <stop offset="1" stop-color="#0EA5E9"/>
+    </linearGradient>
+    <linearGradient id="accentTeal" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#14B8A6"/>
+      <stop offset="1" stop-color="#22C55E"/>
+    </linearGradient>
+    <filter id="cardShadow" x="46" y="20" width="1188" height="380" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="10" stdDeviation="18" flood-color="#0F172A" flood-opacity="0.08"/>
+    </filter>
+  </defs>
+
+  <g filter="url(#cardShadow)">
+    <rect x="64" y="36" width="1152" height="348" rx="28" fill="url(#heroBg)" stroke="#D0D7DE" stroke-width="2"/>
+  </g>
+
+  <path d="M780 106C850 126 920 150 980 198C1032 240 1084 282 1142 310" stroke="#BFDBFE" stroke-width="3" stroke-linecap="round" stroke-dasharray="8 10"/>
+  <path d="M760 284C834 258 902 232 964 196C1020 164 1070 130 1124 98" stroke="#A7F3D0" stroke-width="3" stroke-linecap="round" stroke-dasharray="8 10"/>
+
+  <text x="112" y="112" fill="#0F172A" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="56" font-weight="700">VisionLabelOps</text>
+  <text x="112" y="154" fill="#334155" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="24">
+    Lightweight tooling for computer vision dataset audit, conversion, statistics, splits, previews, and reports.
+  </text>
+
+  <g font-family="Segoe UI, Inter, Arial, sans-serif" font-size="18" font-weight="600">
+    <rect x="112" y="190" width="78" height="34" rx="17" fill="#EFF6FF" stroke="#BFDBFE"/>
+    <text x="136" y="212" fill="#1D4ED8">YOLO</text>
+
+    <rect x="200" y="190" width="82" height="34" rx="17" fill="#EFF6FF" stroke="#BFDBFE"/>
+    <text x="223" y="212" fill="#1D4ED8">COCO</text>
+
+    <rect x="292" y="190" width="110" height="34" rx="17" fill="#EFF6FF" stroke="#BFDBFE"/>
+    <text x="316" y="212" fill="#1D4ED8">Labelme</text>
+
+    <rect x="416" y="190" width="120" height="34" rx="17" fill="#F0FDFA" stroke="#99F6E4"/>
+    <text x="444" y="212" fill="#0F766E">Detection-first</text>
+  </g>
+
+  <g font-family="Segoe UI, Inter, Arial, sans-serif" font-size="22" fill="#0F172A">
+    <circle cx="126" cy="272" r="7" fill="#14B8A6"/>
+    <text x="146" y="279">Unified CLI + Python API for repeatable dataset workflows</text>
+
+    <circle cx="126" cy="318" r="7" fill="#14B8A6"/>
+    <text x="146" y="325">Clean-room implementation with focused YOLO / COCO / Labelme scope</text>
+  </g>
+
+  <g>
+    <rect x="770" y="86" width="150" height="54" rx="18" fill="white" stroke="#CBD5E1" stroke-width="2"/>
+    <circle cx="800" cy="113" r="13" fill="url(#accentBlue)"/>
+    <text x="824" y="119" fill="#0F172A" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="22" font-weight="600">audit</text>
+
+    <rect x="964" y="82" width="162" height="58" rx="18" fill="white" stroke="#CBD5E1" stroke-width="2"/>
+    <circle cx="996" cy="111" r="13" fill="url(#accentBlue)"/>
+    <text x="1020" y="117" fill="#0F172A" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="22" font-weight="600">convert</text>
+
+    <rect x="910" y="178" width="138" height="54" rx="18" fill="white" stroke="#CBD5E1" stroke-width="2"/>
+    <circle cx="940" cy="205" r="13" fill="url(#accentTeal)"/>
+    <text x="964" y="211" fill="#0F172A" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="22" font-weight="600">stats</text>
+
+    <rect x="760" y="274" width="136" height="54" rx="18" fill="white" stroke="#CBD5E1" stroke-width="2"/>
+    <circle cx="790" cy="301" r="13" fill="url(#accentTeal)"/>
+    <text x="814" y="307" fill="#0F172A" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="22" font-weight="600">split</text>
+
+    <rect x="936" y="274" width="160" height="54" rx="18" fill="white" stroke="#CBD5E1" stroke-width="2"/>
+    <circle cx="968" cy="301" r="13" fill="url(#accentBlue)"/>
+    <text x="992" y="307" fill="#0F172A" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="22" font-weight="600">preview</text>
+
+    <rect x="1100" y="274" width="116" height="54" rx="18" fill="white" stroke="#CBD5E1" stroke-width="2"/>
+    <circle cx="1128" cy="301" r="13" fill="url(#accentTeal)"/>
+    <text x="1150" y="307" fill="#0F172A" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="22" font-weight="600">report</text>
+  </g>
+</svg>
