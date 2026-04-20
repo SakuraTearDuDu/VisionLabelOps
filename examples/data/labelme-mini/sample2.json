@@ -1,0 +1,34 @@
+{
+  "version": "5.0.1",
+  "imagePath": "sample2.jpg",
+  "imageHeight": 140,
+  "imageWidth": 220,
+  "shapes": [
+    {
+      "label": "warning-sign",
+      "shape_type": "polygon",
+      "points": [
+        [
+          90,
+          20
+        ],
+        [
+          155,
+          45
+        ],
+        [
+          170,
+          110
+        ],
+        [
+          102,
+          122
+        ],
+        [
+          70,
+          72
+        ]
+      ]
+    }
+  ]
+}

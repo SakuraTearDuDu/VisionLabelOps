@@ -1,5 +1,8 @@
 from __future__ import annotations
 
+from importlib.metadata import PackageNotFoundError, version
+
+from visionlabelops._version import __version__ as _fallback_version
 from visionlabelops.api import (
     audit_dataset,
     compute_stats,
@@ -11,6 +14,7 @@ from visionlabelops.api import (
 )
 
 __all__ = [
+    "__version__",
     "audit_dataset",
     "compute_stats",
     "convert_dataset",
@@ -20,4 +24,7 @@ __all__ = [
     "split_dataset",
 ]
 
-__version__ = "0.1.0"
+try:
+    __version__ = version("visionlabelops")
+except PackageNotFoundError:
+    __version__ = _fallback_version

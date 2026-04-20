@@ -6,10 +6,10 @@ from visionlabelops import audit_dataset, compute_stats, read_dataset
 
 
 def main() -> None:
-    dataset_root = Path(__file__).resolve().parents[1] / "tests" / "fixtures" / "labelme"
+    dataset_root = Path(__file__).resolve().parent / "data" / "labelme-mini"
     dataset = read_dataset(dataset_root, "labelme")
-    stats = compute_stats(dataset)
-    audit = audit_dataset(dataset)
+    stats = compute_stats(dataset_root, "labelme")
+    audit = audit_dataset(dataset_root, "labelme")
 
     print(f"images={dataset.image_count}")
     print(f"annotations={stats.annotation_count}")
