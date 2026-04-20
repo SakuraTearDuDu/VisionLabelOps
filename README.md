@@ -74,8 +74,8 @@ The package also includes a Labelme writer used by internal materialization work
 ### Standard install
 
 ```powershell
-git clone <repository-url> D:\github_test_VisionLabelOps
-cd D:\github_test_VisionLabelOps
+git clone https://github.com/SakuraTearDuDu/VisionLabelOps.git D:\VisionLabelOps
+cd D:\VisionLabelOps
 python -m venv .venv
 .venv\Scripts\Activate.ps1
 python -m pip install --upgrade pip

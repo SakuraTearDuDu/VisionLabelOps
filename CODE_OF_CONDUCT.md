@@ -19,6 +19,8 @@ VisionLabelOps is maintained as a small, engineering-focused open-source project
 
 Project maintainers may edit, remove, lock, or reject content that harms the collaboration environment or is clearly out of scope for the repository.
 
+If you need to report conduct issues privately, contact `linzaixinroyleo@foxmail.com`.
+
 ## Scope
 
 This applies to repository issues, pull requests, discussions, and other project-managed communication channels.
