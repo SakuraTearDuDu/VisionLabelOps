@@ -1,0 +1,30 @@
+name: Bug report
+description: Report a reproducible defect in VisionLabelOps
+title: "[bug] "
+labels: ["bug"]
+body:
+  - type: textarea
+    id: summary
+    attributes:
+      label: Summary
+      description: What happened?
+    validations:
+      required: true
+  - type: textarea
+    id: repro
+    attributes:
+      label: Reproduction
+      description: Include commands, file layout, and exact inputs where possible.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+    validations:
+      required: true
+  - type: textarea
+    id: env
+    attributes:
+      label: Environment
+      description: Python version, OS, install method, and package version.

@@ -1,0 +1,39 @@
+# Python bytecode and caches
+__pycache__/
+*.py[cod]
+*.pyd
+*.so
+.mypy_cache/
+.pytest_cache/
+.ruff_cache/
+.hypothesis/
+.coverage
+.coverage.*
+
+# Packaging / build outputs
+build/
+dist/
+*.egg-info/
+*.egg
+pip-wheel-metadata/
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Tooling / editor state
+.python-version
+.idea/
+.vscode/
+.codex/
+
+# OS metadata
+.DS_Store
+Thumbs.db
+
+# Local scratch data
+.cache/
+tmp/
+htmlcov/
+coverage.xml

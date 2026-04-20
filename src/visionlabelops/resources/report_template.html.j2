@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>{{ summary.project }} Report</title>
+    <style>
+      body { font-family: Segoe UI, sans-serif; margin: 2rem; color: #0f172a; background: #f8fafc; }
+      h1, h2 { color: #0f172a; }
+      .card { background: white; border: 1px solid #cbd5e1; border-radius: 12px; padding: 1rem 1.25rem; margin-bottom: 1rem; }
+      code { background: #e2e8f0; padding: 0.15rem 0.35rem; border-radius: 6px; }
+      ul { padding-left: 1.25rem; }
+    </style>
+  </head>
+  <body>
+    <h1>{{ summary.project }} Report</h1>
+    <div class="card">
+      <h2>Dataset Overview</h2>
+      <ul>
+        <li>Format: <code>{{ summary.dataset_format }}</code></li>
+        <li>Images: {{ summary.image_count }}</li>
+        <li>Annotations: {{ summary.annotation_count }}</li>
+        <li>Categories: {{ summary.category_count }}</li>
+        <li>Root: <code>{{ summary.dataset_root }}</code></li>
+      </ul>
+    </div>
+    <div class="card">
+      <h2>Audit Summary</h2>
+      <pre>{{ summary.audit }}</pre>
+    </div>
+    <div class="card">
+      <h2>Statistics</h2>
+      <pre>{{ summary.stats }}</pre>
+    </div>
+    {% if summary.split %}
+    <div class="card">
+      <h2>Split Summary</h2>
+      <pre>{{ summary.split }}</pre>
+    </div>
+    {% endif %}
+    {% if summary.convert %}
+    <div class="card">
+      <h2>Conversion Summary</h2>
+      <pre>{{ summary.convert }}</pre>
+    </div>
+    {% endif %}
+  </body>
+</html>
