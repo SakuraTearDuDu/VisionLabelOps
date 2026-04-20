@@ -1,8 +1,10 @@
 # Quickstart
 
-These examples assume Windows PowerShell and a local checkout at `D:\github_test_VisionLabelOps`.
+This guide uses the repository's built-in example dataset at `examples/data/labelme-mini` so you can validate the CLI and API without preparing your own data first.
 
-## 1. Create the local environment
+## 1. Create the environment
+
+Windows PowerShell:
 
 ```powershell
 cd D:\github_test_VisionLabelOps
@@ -12,82 +14,100 @@ python -m pip install --upgrade pip
 python -m pip install -e .[dev]
 ```
 
+Linux/macOS bash or zsh:
+
+```bash
+cd /path/to/VisionLabelOps
+python -m venv .venv
+source .venv/bin/activate
+python -m pip install --upgrade pip
+python -m pip install -e .[dev]
+```
+
 ## 2. Validate the installation
 
-```powershell
+```bash
+python -m visionlabelops --version
 vlo --help
-python -m pytest
+python examples/basic_api.py
 ```
 
 ## 3. Run a minimal audit + stats pass
 
-```powershell
-vlo audit `
-  --input D:\data\labelme `
-  --format labelme `
-  --output D:\work\audit `
-  --overwrite
-
-vlo stats `
-  --input D:\data\labelme `
-  --format labelme `
-  --output D:\work\stats `
-  --overwrite
+```bash
+vlo audit --input ./examples/data/labelme-mini --format labelme --output ./tmp/audit --overwrite
+vlo stats --input ./examples/data/labelme-mini --format labelme --output ./tmp/stats --overwrite
 ```
 
 Each non-dry-run command writes a `result.json` into the output directory and prints a short terminal summary.
 
 ## 4. Convert formats
 
-```powershell
-vlo convert `
-  --input D:\data\labelme `
-  --input-format labelme `
-  --output D:\work\converted-yolo `
-  --output-format yolo `
+```bash
+vlo convert \
+  --input ./examples/data/labelme-mini \
+  --input-format labelme \
+  --output ./tmp/converted-yolo \
+  --output-format yolo \
   --overwrite
 ```
 
 ## 5. Split a dataset
 
-```powershell
-vlo split `
-  --input D:\data\labelme `
-  --format labelme `
-  --output D:\work\split `
-  --train 0.7 `
-  --val 0.2 `
-  --test 0.1 `
-  --seed 7 `
+```bash
+vlo split \
+  --input ./examples/data/labelme-mini \
+  --format labelme \
+  --output ./tmp/split \
+  --train 0.7 \
+  --val 0.2 \
+  --test 0.1 \
+  --seed 7 \
   --overwrite
 ```
 
 ## 6. Preview and report
 
-```powershell
-vlo preview `
-  --input D:\data\labelme `
-  --format labelme `
-  --output D:\work\preview `
-  --samples 8 `
-  --seed 7 `
+```bash
+vlo preview \
+  --input ./examples/data/labelme-mini \
+  --format labelme \
+  --output ./tmp/preview \
+  --samples 2 \
+  --seed 7 \
   --overwrite
 
-vlo report `
-  --input D:\data\labelme `
-  --format labelme `
-  --output D:\work\report `
+vlo report \
+  --input ./examples/data/labelme-mini \
+  --format labelme \
+  --output ./tmp/report \
   --overwrite
 ```
 
-## 7. Minimal Python API example
+## 7. Use script-friendly JSON output
+
+```bash
+vlo audit \
+  --input ./examples/data/labelme-mini \
+  --format labelme \
+  --output ./tmp/audit-json \
+  --overwrite \
+  --stdout-json \
+  --strict
+```
+
+## 8. Minimal Python API example
 
 ```python
+from pathlib import Path
+
 from visionlabelops import audit_dataset, compute_stats, read_dataset
 
-dataset = read_dataset(r"D:\data\labelme", "labelme")
-stats = compute_stats(dataset)
-audit = audit_dataset(dataset)
+dataset_root = Path("examples/data/labelme-mini")
+
+dataset = read_dataset(dataset_root, "labelme")
+stats = compute_stats(dataset_root, "labelme")
+audit = audit_dataset(dataset_root, "labelme")
 
 print(dataset.image_count)
 print(stats.annotation_count)

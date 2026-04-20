@@ -1,12 +1,12 @@
 from __future__ import annotations
 
-import json
 import shutil
 from pathlib import Path
 
-from visionlabelops.constants import IMAGE_EXTENSIONS, RESULT_FILE_NAME
+from visionlabelops.constants import IMAGE_EXTENSIONS
 from visionlabelops.errors import OutputPathError
-from visionlabelops.utils.serialization import to_jsonable
+from visionlabelops.types import AuditResult, ConvertResult, PreviewResult, ReportResult, SplitResult, StatsResult
+from visionlabelops.utils.serialization import dump_result_file
 
 
 def ensure_output_path(path: Path, overwrite: bool = False) -> Path:
@@ -21,11 +21,11 @@ def ensure_output_path(path: Path, overwrite: bool = False) -> Path:
     return path
 
 
-def write_result_file(output_dir: Path, payload: object) -> Path:
-    output_dir.mkdir(parents=True, exist_ok=True)
-    result_path = output_dir / RESULT_FILE_NAME
-    result_path.write_text(json.dumps(to_jsonable(payload), indent=2), encoding="utf-8")
-    return result_path
+def write_result_file(
+    output_dir: Path,
+    payload: AuditResult | StatsResult | ConvertResult | SplitResult | PreviewResult | ReportResult,
+) -> Path:
+    return dump_result_file(output_dir, payload)
 
 
 def find_image_by_stem(directory: Path, stem: str) -> Path | None:

@@ -15,8 +15,9 @@ from visionlabelops.api import (
     split_dataset,
 )
 from visionlabelops.cli import main as cli_main
-from visionlabelops.errors import OutputPathError, ValidationError
-from visionlabelops.types import DatasetFormat
+from visionlabelops.errors import DatasetFormatError, OutputPathError, ValidationError
+from visionlabelops.types import AuditResult, DatasetFormat
+from visionlabelops.utils.serialization import deserialize_result, serialize_result
 
 
 def test_audit_stats_preview_report_and_split_pipeline(supported_labelme_dataset_dir: Path, tmp_path: Path) -> None:
@@ -85,6 +86,8 @@ def test_cli_smoke(labelme_dataset_dir: Path, tmp_path: Path) -> None:
     assert "images=3" in result.stdout
 
     payload = json.loads((output_dir / "result.json").read_text(encoding="utf-8"))
+    assert payload["schema_version"] == 1
+    assert payload["result_type"] == "stats"
     assert payload["image_count"] == 3
 
 
@@ -237,6 +240,118 @@ def test_split_rejects_invalid_ratios(supported_labelme_dataset_dir: Path, tmp_p
             test_ratio=0.2,
             seed=7,
         )
+
+
+def test_public_api_requires_explicit_input_format(supported_labelme_dataset_dir: Path) -> None:
+    with pytest.raises(DatasetFormatError):
+        audit_dataset(supported_labelme_dataset_dir, None)  # type: ignore[arg-type]
+
+
+def test_cli_stdout_json_and_strict_mode(audit_problem_dir: Path, tmp_path: Path) -> None:
+    output_dir = tmp_path / "audit-json"
+    command = [
+        sys.executable,
+        "-m",
+        "visionlabelops",
+        "audit",
+        "--input",
+        str(audit_problem_dir),
+        "--format",
+        "labelme",
+        "--output",
+        str(output_dir),
+        "--overwrite",
+        "--stdout-json",
+        "--strict",
+    ]
+
+    result = subprocess.run(command, check=False, capture_output=True, text=True)
+
+    assert result.returncode == 1
+    payload = json.loads(result.stdout)
+    assert payload["schema_version"] == 1
+    assert payload["result_type"] == "audit"
+    assert payload["summary"]["issue_count"] >= 1
+    assert (output_dir / "result.json").exists()
+
+
+def test_report_accepts_legacy_result_files(supported_labelme_dataset_dir: Path, tmp_path: Path) -> None:
+    audit_dir = tmp_path / "audit"
+    convert_dir = tmp_path / "convert"
+    split_dir = tmp_path / "split"
+    report_dir = tmp_path / "report"
+
+    assert cli_main(
+        ["audit", "--input", str(supported_labelme_dataset_dir), "--format", "labelme", "--output", str(audit_dir)]
+    ) == 0
+    assert cli_main(
+        [
+            "convert",
+            "--input",
+            str(supported_labelme_dataset_dir),
+            "--input-format",
+            "labelme",
+            "--output",
+            str(convert_dir),
+            "--output-format",
+            "yolo",
+        ]
+    ) == 0
+    assert cli_main(
+        [
+            "split",
+            "--input",
+            str(supported_labelme_dataset_dir),
+            "--format",
+            "labelme",
+            "--output",
+            str(split_dir),
+            "--train",
+            "0.5",
+            "--val",
+            "0.25",
+            "--test",
+            "0.25",
+            "--seed",
+            "7",
+        ]
+    ) == 0
+
+    for result_path in (audit_dir / "result.json", convert_dir / "result.json", split_dir / "result.json"):
+        payload = json.loads(result_path.read_text(encoding="utf-8"))
+        payload.pop("schema_version", None)
+        payload.pop("result_type", None)
+        result_path.write_text(json.dumps(payload, indent=2), encoding="utf-8")
+
+    assert cli_main(
+        [
+            "report",
+            "--input",
+            str(supported_labelme_dataset_dir),
+            "--format",
+            "labelme",
+            "--output",
+            str(report_dir),
+            "--audit-result",
+            str(audit_dir / "result.json"),
+            "--split-result",
+            str(split_dir / "result.json"),
+            "--convert-result",
+            str(convert_dir / "result.json"),
+        ]
+    ) == 0
+    assert (report_dir / "report.md").exists()
+
+
+def test_result_serialization_round_trip(labelme_dataset_dir: Path) -> None:
+    audit_result = audit_dataset(labelme_dataset_dir, DatasetFormat.LABELME)
+
+    payload = serialize_result(audit_result)
+    restored = deserialize_result(payload, AuditResult)
+
+    assert restored.summary == audit_result.summary
+    assert len(restored.issues) == len(audit_result.issues)
+    assert restored.issues[0].code == audit_result.issues[0].code
 
 
 def test_cli_rejects_existing_nonempty_output_without_overwrite(

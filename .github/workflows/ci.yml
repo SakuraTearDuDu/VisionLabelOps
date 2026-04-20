@@ -31,7 +31,7 @@ jobs:
         run: python -m mypy src
 
       - name: Run tests
-        run: python -m pytest --cov=visionlabelops --cov-report=term-missing
+        run: python -m pytest --cov=visionlabelops --cov-report=term-missing --cov-fail-under=92
 
   build:
     name: Build package
@@ -50,11 +50,14 @@ jobs:
       - name: Validate build
         run: python -m build --no-isolation
 
+      - name: Validate package metadata
+        run: python -m twine check dist/*
+
       - name: Install built wheel
         run: python -m pip install --force-reinstall dist/*.whl
 
       - name: Smoke test built artifact
-        run: python -m visionlabelops --help
+        run: python -m visionlabelops stats --input examples/data/labelme-mini --format labelme --output tmp/ci-stats --overwrite
 
   windows-cli-smoke:
     name: Windows CLI smoke
@@ -71,4 +74,21 @@ jobs:
         run: python -m pip install --upgrade pip && python -m pip install .
 
       - name: Smoke test CLI
-        run: vlo --help
+        run: python -m visionlabelops stats --input examples/data/labelme-mini --format labelme --output tmp/ci-stats --overwrite
+
+  macos-cli-smoke:
+    name: macOS CLI smoke
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install package
+        run: python -m pip install --upgrade pip && python -m pip install .
+
+      - name: Smoke test CLI
+        run: python -m visionlabelops stats --input examples/data/labelme-mini --format labelme --output tmp/ci-stats --overwrite

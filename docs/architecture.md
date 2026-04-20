@@ -14,6 +14,13 @@ VisionLabelOps is organized as a small toolkit around a shared dataset model.
 - `visionlabelops.report` writes human-readable and machine-readable summaries.
 - `visionlabelops.cli` exposes the user-facing command line entrypoint.
 
+## Public API style
+
+- `read_dataset(...)` is the explicit bridge from on-disk source data into the shared internal model.
+- Public high-level API helpers are path-first: they take an input path plus declared format and load datasets internally.
+- Core service functions remain dataset-first and operate on `Dataset` objects directly.
+- Result-file serialization is centralized in `visionlabelops.utils.serialization` so CLI commands do not own schema logic.
+
 ## Internal model
 
 The package uses one shared detection-first model:
@@ -33,12 +40,13 @@ Format adapters convert source structures into that model early. Downstream serv
 2. The reader normalizes the dataset into in-memory domain objects.
 3. Downstream services operate on that shared model instead of format-specific structures.
 4. Exporters write the result into a requested output directory or file.
-5. The CLI wraps each service with a stable command, arguments, and exit code.
+5. The CLI wraps each service with a stable command, arguments, exit code, and result-file contract.
 
 ## Output conventions
 
 - write commands require an explicit output directory
 - non-dry-run write commands emit a `result.json`
+- result files include `schema_version` and `result_type`
 - `convert` preserves the requested output format
 - `split` materializes the source format into reproducible subsets
 - `report` emits both Markdown and HTML

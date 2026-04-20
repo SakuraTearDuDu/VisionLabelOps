@@ -1,0 +1,22 @@
+{
+  "version": "5.0.1",
+  "imagePath": "sample1.jpg",
+  "imageHeight": 120,
+  "imageWidth": 200,
+  "shapes": [
+    {
+      "label": "crate",
+      "shape_type": "rectangle",
+      "points": [
+        [
+          20,
+          16
+        ],
+        [
+          126,
+          92
+        ]
+      ]
+    }
+  ]
+}

@@ -6,7 +6,13 @@ All notable changes to this project will be documented in this file.
 
 ### Changed
 
-- Reserved for changes after the first public release.
+- Centralized package versioning around one source file and dynamic setuptools metadata.
+- Standardized public high-level APIs on path-first inputs while keeping dataset-first core services.
+- Added schema versioning and centralized result serialization / deserialization for CLI result files.
+- Reworked repository examples to use `examples/data/labelme-mini` instead of test fixtures.
+- Rewrote README and quickstart docs for cross-platform usage and automation-oriented examples.
+- Hardened CI with coverage thresholds, `twine check`, real built-wheel smoke, and macOS smoke coverage.
+- Added `pre-commit` and `justfile` for faster contributor verification loops.
 
 ## [0.1.0] - 2026-04-20
 

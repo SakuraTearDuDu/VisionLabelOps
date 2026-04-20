@@ -122,7 +122,7 @@ def run_audit(dataset: Dataset) -> AuditResult:
         "annotation_count": dataset.annotation_count,
         "category_count": len(dataset.categories),
         "issue_count": len(issues),
-        "issues_by_severity": Counter(issue.severity.value for issue in issues),
+        "issues_by_severity": dict(Counter(issue.severity.value for issue in issues)),
         "per_class_instances": dict(per_class),
         "per_image_box_distribution": dict(per_image_boxes),
         "image_size_distribution": dict(image_sizes),

@@ -31,6 +31,12 @@ def _resolve_format(dataset_format: DatasetFormat | str) -> DatasetFormat:
         raise DatasetFormatError(f"Unsupported dataset format: {dataset_format}") from exc
 
 
+def _require_format(dataset_format: DatasetFormat | str | None, argument_name: str) -> DatasetFormat | str:
+    if dataset_format is None:
+        raise DatasetFormatError(f"{argument_name} is required when reading a dataset from path.")
+    return dataset_format
+
+
 def read_dataset(input_path: Path | str, dataset_format: DatasetFormat | str) -> Dataset:
     input_path = Path(input_path).resolve()
     format_enum = _resolve_format(dataset_format)
@@ -43,14 +49,12 @@ def read_dataset(input_path: Path | str, dataset_format: DatasetFormat | str) ->
     raise DatasetFormatError(f"Unsupported dataset format: {format_enum}")
 
 
-def audit_dataset(input_path: Path | str | Dataset, input_format: DatasetFormat | str | None = None) -> AuditResult:
-    dataset = input_path if isinstance(input_path, Dataset) else read_dataset(input_path, input_format or "")
-    return run_audit(dataset)
+def audit_dataset(input_path: Path | str, input_format: DatasetFormat | str) -> AuditResult:
+    return run_audit(read_dataset(input_path, _require_format(input_format, "input_format")))
 
 
-def compute_stats(input_path: Path | str | Dataset, input_format: DatasetFormat | str | None = None) -> StatsResult:
-    dataset = input_path if isinstance(input_path, Dataset) else read_dataset(input_path, input_format or "")
-    return compute_dataset_stats(dataset)
+def compute_stats(input_path: Path | str, input_format: DatasetFormat | str) -> StatsResult:
+    return compute_dataset_stats(read_dataset(input_path, _require_format(input_format, "input_format")))
 
 
 def convert_dataset(

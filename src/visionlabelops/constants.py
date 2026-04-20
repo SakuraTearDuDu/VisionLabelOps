@@ -9,6 +9,7 @@ DEFAULT_HTML_TEMPLATE = "report_template.html.j2"
 PROJECT_NAME = "VisionLabelOps"
 DEFAULT_SUBSET = "default"
 RESULT_FILE_NAME = "result.json"
+RESULT_SCHEMA_VERSION = 1
 
 
 def resource_path(name: str) -> Path:
