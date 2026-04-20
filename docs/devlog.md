@@ -40,6 +40,13 @@ All writes for this repository must stay within `D:\github_test_VisionLabelOps`.
 - Decision: keep bilingual maintenance limited to README and quickstart so the documentation surface stays sustainable instead of attempting full-site translation
 - Decision: use repository-generated preview assets plus a hand-authored SVG hero banner instead of a heavy external design workflow, so the showcase remains reproducible inside the repo
 
+## 2026-04-20 v0.1.1 release preparation
+
+- Changed: `CHANGELOG.md`, `docs/release_notes_v0.1.1.md`, `docs/github_showcase_checklist.md`
+- Why: prepare a release-ready changelog section, a GitHub-ready release notes draft, and a prioritized checklist for the remaining GitHub web settings
+- Result: the repository now has enough material for a clean `v0.1.1` release page without further widening the project scope
+- Decision: keep release prep focused on repository maturity, showcase polish, and bilingual documentation rather than presenting `v0.1.1` as a feature expansion
+
 ## Notes for future entries
 
 - Record only work done inside this workspace.

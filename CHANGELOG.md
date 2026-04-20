@@ -4,15 +4,29 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [0.1.1] - 2026-04-20
+
+### Added
+
+- Simplified Chinese documentation entry points via `README.zh-CN.md` and `docs/quickstart.zh-CN.md`.
+- Repository showcase assets for GitHub presentation, including a hero banner, CLI preview image, and social preview image.
+- `docs/github_showcase_checklist.md` for post-merge GitHub settings and presentation follow-up.
+- `docs/release_notes_v0.1.1.md` as the canonical GitHub Release draft source for this version.
+
 ### Changed
 
 - Centralized package versioning around one source file and dynamic setuptools metadata.
 - Standardized public high-level APIs on path-first inputs while keeping dataset-first core services.
 - Added schema versioning and centralized result serialization / deserialization for CLI result files.
 - Reworked repository examples to use `examples/data/labelme-mini` instead of test fixtures.
-- Rewrote README and quickstart docs for cross-platform usage and automation-oriented examples.
 - Hardened CI with coverage thresholds, `twine check`, real built-wheel smoke, and macOS smoke coverage.
-- Added `pre-commit` and `justfile` for faster contributor verification loops.
+- Rebuilt the GitHub README front page with clearer highlights, bilingual entry points, support tables, and results preview sections.
+- Refined quickstart documentation so the repository now has both English and Simplified Chinese onboarding paths.
+
+### Notes
+
+- `0.1.1` is a repository-maturity and showcase-polish release, not a new feature-scope expansion.
+- The project remains intentionally detection-first and focused on YOLO / COCO / Labelme workflows.
 
 ## [0.1.0] - 2026-04-20
 
