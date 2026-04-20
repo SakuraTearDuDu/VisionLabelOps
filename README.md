@@ -1,60 +1,60 @@
 # VisionLabelOps
 
+> Detection-first dataset tooling for audit, conversion, statistics, splits, previews, and reports.
+
+**English** | [简体中文](README.zh-CN.md)
+
 [![CI](https://github.com/SakuraTearDuDu/VisionLabelOps/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/SakuraTearDuDu/VisionLabelOps/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Python 3.10+](https://img.shields.io/badge/Python-3.10%2B-blue.svg)](https://www.python.org/downloads/)
 
-VisionLabelOps is a lightweight Python toolkit for computer vision dataset audit, conversion, statistics, splitting, preview, and report generation.
+![VisionLabelOps hero banner](docs/assets/readme-hero.svg)
 
-It is built for users who work with YOLO, COCO, and Labelme datasets and want a small, scriptable, installable project instead of a notebook-heavy workflow, a GUI labeler, or a training framework add-on.
+VisionLabelOps is a lightweight Python toolkit for computer vision dataset audit, conversion, statistics, splitting, preview, and report generation. It is designed for teams that work with YOLO, COCO, and Labelme datasets and want something smaller than a full dataset platform, but more structured than one-off scripts.
 
-![VisionLabelOps preview output](docs/assets/readme-preview.jpg)
+## Highlights
 
-## What it is
+- 🔎 **Focused, not sprawling**: detection-first scope with explicit boundaries instead of a broad plugin platform.
+- ⚙️ **Unified CLI + API**: the same workflows are available from `vlo` and from importable Python helpers.
+- 🧪 **Automation-friendly**: structured result files, `--stdout-json`, CI validation, and reproducible example data.
+- 🧼 **Clean-room and GitHub-friendly**: clear reference boundaries, typed Python package layout, tests, docs, and release-ready metadata.
 
-- Detection-first dataset tooling for `audit`, `convert`, `stats`, `split`, `preview`, and `report`
-- Focused on YOLO detection, COCO detection, and Labelme JSON
-- Usable from both a Python API and a `vlo` CLI
-- Designed to stay narrower than Datumaro and more engineering-oriented than ad-hoc conversion scripts
+## Start Here
 
-## Why this project exists
+- Read the [Quick Start](docs/quickstart.md) if you want the fastest path from clone to first command.
+- Use the repository example dataset at [`examples/data/labelme-mini`](examples/data/labelme-mini) to try the CLI immediately.
+- Jump to [Results Preview](#results-preview) if you want to see what the toolkit produces.
 
-There are strong reference projects in this space, but they optimize for different goals:
+## Support At A Glance
 
-- Datumaro provides a broad dataset engineering framework and large format surface.
-- PyLabel focuses on low-friction utility workflows for end users.
-- Supervision has clean ideas for lightweight preview and visualization.
-- Labelme defines JSON structures many teams already use.
-- JSON2YOLO and Ultralytics define common YOLO conversion behavior expectations.
+| Area | Current V1 support |
+| --- | --- |
+| Formats | YOLO detection, COCO detection, Labelme JSON |
+| Stable conversions | Labelme -> YOLO, Labelme -> COCO, YOLO -> COCO, COCO -> YOLO |
+| Core workflows | `audit`, `convert`, `stats`, `split`, `preview`, `report` |
+| Usage style | Python API + `vlo` CLI |
+| Example data | `examples/data/labelme-mini` |
 
-VisionLabelOps sits in the middle:
+## Core Capabilities
 
-- narrower than Datumaro
-- more engineering-focused than PyLabel
-- more systematic than one-off conversion scripts
-- easier to install and automate than a mixed notebook/script toolbox
+| Command | What it gives you | Typical output |
+| --- | --- | --- |
+| `vlo audit` | dataset quality checks and risk summary | `result.json` |
+| `vlo convert` | clean-room format conversion | converted dataset + `result.json` |
+| `vlo stats` | size, class, and box distribution summary | `result.json` |
+| `vlo split` | reproducible train/val/test materialization | split dataset + `result.json` |
+| `vlo preview` | sampled overlays and contact sheets | annotated images + `contact_sheet.jpg` |
+| `vlo report` | markdown + HTML summary package | `report.md`, `report.html`, `result.json` |
 
-## Support and scope
+## Results Preview
 
-### Supported formats
+Real repository artifacts, generated from `examples/data/labelme-mini`.
 
-- YOLO detection
-- COCO detection
-- Labelme JSON
+| Preview overlays | CLI and report workflow |
+| --- | --- |
+| ![Preview contact sheet](docs/assets/readme-preview.jpg) | ![CLI workflow preview](docs/assets/readme-cli-preview.png) |
 
-### Stable V1 conversion guarantees
-
-- Labelme -> YOLO
-- Labelme -> COCO
-- YOLO -> COCO
-- COCO -> YOLO
-
-### Known limitations
-
-- VisionLabelOps is intentionally detection-first. It is not a segmentation, keypoint, tracking, GUI, web, or training framework project.
-- Labelme support is limited to `rectangle` and `polygon`.
-- COCO import skips `iscrowd=1` annotations.
-- The current YOLO reader is intentionally narrow and stable rather than broadly heuristic.
+For GitHub repository sharing outside the README, a social preview asset is also prepared at [`docs/assets/social-preview.png`](docs/assets/social-preview.png).
 
 ## Install
 
@@ -82,77 +82,41 @@ python -m pip install --upgrade pip
 python -m pip install -e .[dev]
 ```
 
-### Minimal runtime install from the checkout
+### Minimal runtime install
 
 ```bash
 python -m pip install .
 ```
 
-## Quick start
+## Quick Start
 
-The repository includes a tiny example dataset in `examples/data/labelme-mini`.
-
-### Inspect the example dataset
-
-PowerShell:
-
-```powershell
-vlo stats --input .\examples\data\labelme-mini --format labelme --output .\tmp\stats --overwrite
-vlo audit --input .\examples\data\labelme-mini --format labelme --output .\tmp\audit --overwrite
-```
-
-Bash:
+### Minimal CLI path
 
 ```bash
 vlo stats --input ./examples/data/labelme-mini --format labelme --output ./tmp/stats --overwrite
 vlo audit --input ./examples/data/labelme-mini --format labelme --output ./tmp/audit --overwrite
-```
-
-### Preview and report
-
-```bash
 vlo preview --input ./examples/data/labelme-mini --format labelme --output ./tmp/preview --samples 2 --seed 7 --overwrite
-vlo report --input ./examples/data/labelme-mini --format labelme --output ./tmp/report --overwrite
 ```
 
-### Run the API example
-
-```bash
-python examples/basic_api.py
-```
-
-## CLI overview
-
-```text
-vlo audit --input --format --output [--overwrite] [--stdout-json] [--strict]
-vlo convert --input --input-format --output --output-format [--overwrite] [--dry-run] [--stdout-json]
-vlo stats --input --format --output [--overwrite] [--stdout-json]
-vlo split --input --format --output --train --val --test --seed [--overwrite] [--dry-run] [--stdout-json]
-vlo report --input --format --output [--audit-result ...] [--split-result ...] [--convert-result ...] [--overwrite] [--stdout-json]
-vlo preview --input --format --output --samples --seed [--overwrite] [--stdout-json]
-```
-
-### CLI behavior
-
-- write commands require an explicit output directory
-- `--overwrite` is required before replacing a non-empty output directory
-- `convert --dry-run` and `split --dry-run` do not create output directories or `result.json`
-- non-dry-run commands write `result.json`
-- result files include `schema_version` and `result_type`
-- `--stdout-json` prints structured output for scripts and CI
-- `audit --strict` returns a non-zero exit code when error-level issues are present
-
-### Automation example
+### Script-friendly mode
 
 ```bash
 vlo audit \
   --input ./examples/data/labelme-mini \
   --format labelme \
-  --output ./tmp/audit \
+  --output ./tmp/audit-json \
   --overwrite \
   --stdout-json \
   --strict
 ```
+
+### Runnable API example
+
+```bash
+python examples/basic_api.py
+```
+
+For the full setup path and platform-specific notes, see [docs/quickstart.md](docs/quickstart.md).
 
 ## Python API
 
@@ -179,18 +143,52 @@ print(stats.annotation_count)
 print(report.markdown_path)
 ```
 
-The repository also includes [`examples/basic_api.py`](examples/basic_api.py) as a runnable example.
+## Scope Boundaries
 
-## Output conventions
+### What this repository is
 
-- `audit` writes `result.json`
-- `stats` writes `result.json`
-- `convert` writes converted data plus `result.json`
-- `split` writes the materialized split plus `result.json`
-- `preview` writes sample overlays, `contact_sheet.jpg`, and `result.json`
-- `report` writes `report.md`, `report.html`, and `result.json`
+- A lightweight toolkit for dataset audit, conversion, summary statistics, splitting, previews, and reports.
+- A detection-first package aimed at YOLO / COCO / Labelme workflows.
+- A clean-room implementation with a narrow, testable feature surface.
 
-## Development
+### What this repository is not
+
+- Not a segmentation, keypoint, tracking, or training framework project.
+- Not a GUI labeling application.
+- Not a web service or cloud platform.
+- Not a broad dataset format compatibility layer.
+
+### Known limitations
+
+- Labelme support is limited to `rectangle` and `polygon`.
+- COCO import skips `iscrowd=1` annotations.
+- The YOLO reader intentionally favors a narrow, stable layout over heuristic compatibility sprawl.
+
+## Why this project exists
+
+There are strong reference projects in this area, but they optimize for different goals:
+
+- Datumaro is broader and more platform-like.
+- PyLabel is lightweight and user-friendly, but less centered on unified repo engineering.
+- Supervision contributes strong ideas around preview and visualization.
+
+VisionLabelOps is intentionally in between: lighter than a broad dataset platform, more structured than ad-hoc scripts, and easier to automate than a notebook-first workflow.
+
+## FAQ
+
+### Is this a fork of Datumaro, PyLabel, Labelme, JSON2YOLO, or Ultralytics?
+
+No. VisionLabelOps is a clean-room implementation with its own package layout, tests, and documentation.
+
+### Does this project support segmentation or keypoints?
+
+Not as a V1 goal. Polygon geometry may be preserved where relevant, but the project remains detection-first.
+
+### Is Windows supported?
+
+Yes. The CLI, docs, and CI explicitly cover Windows, while installation and quick start examples are also provided for Linux/macOS.
+
+## Development Notes
 
 ```bash
 python -m venv .venv
@@ -199,47 +197,24 @@ pre-commit install
 just verify
 ```
 
-The underlying commands remain:
+Useful docs:
 
-```bash
-python -m ruff check src tests
-python -m mypy src
-python -m pytest
-python -m build --no-isolation
-python -m twine check dist/*
-```
-
-Additional project notes:
-
-- [docs/quickstart.md](docs/quickstart.md)
-- [docs/architecture.md](docs/architecture.md)
-- [docs/reference_notes.md](docs/reference_notes.md)
-- [docs/release_checklist.md](docs/release_checklist.md)
-
-## FAQ
-
-### Is this a fork of Datumaro, PyLabel, Labelme, JSON2YOLO, or Ultralytics?
-
-No. VisionLabelOps is a clean-room implementation with its own codebase and package layout.
-
-### Does this project support segmentation or keypoints?
-
-Not as a V1 goal. Polygon geometry may be preserved when available, but the toolkit is detection-first.
-
-### Is Windows supported?
-
-Yes. The docs, CLI examples, and CI explicitly cover Windows, and the repository now includes Linux/macOS examples as well.
+- [Quick Start](docs/quickstart.md)
+- [Architecture](docs/architecture.md)
+- [Reference Notes](docs/reference_notes.md)
+- [Release Checklist](docs/release_checklist.md)
+- [GitHub Showcase Checklist](docs/github_showcase_checklist.md)
 
 ## License and reference boundaries
 
-VisionLabelOps is released under the MIT License.
+VisionLabelOps is released under the [MIT License](LICENSE).
 
-Reference projects were used for architecture, workflow, file format, and behavior research only:
+Reference repositories were used for architecture, workflow, file-format, and behavior research only:
 
-- Datumaro: modular dataset operations and CLI shape
-- PyLabel: low-friction conversion and utility workflow
-- Supervision: preview and visualization ideas
-- Labelme: JSON and shape semantics
-- JSON2YOLO / Ultralytics: YOLO conversion behavior expectations
+- Datumaro for modular dataset operations and task-oriented CLI structure
+- PyLabel for approachable conversion and analysis workflow ideas
+- Supervision for preview and visualization direction
+- Labelme for JSON and shape semantics
+- JSON2YOLO / Ultralytics for YOLO conversion behavior expectations
 
 The project does not copy GPL / AGPL source code, mapping tables, or internal implementations from those repositories.

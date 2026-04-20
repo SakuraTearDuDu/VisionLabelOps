@@ -1,12 +1,12 @@
-# Quick Start
+# 快速开始
 
-**English** | [简体中文](quickstart.zh-CN.md)
+[English](quickstart.md) | **简体中文**
 
-This guide uses the repository example dataset at `examples/data/labelme-mini`, so you can validate the CLI and API without preparing your own data first.
+本指南使用仓库内置的演示数据集 `examples/data/labelme-mini`，方便你在不准备自有数据的情况下，先验证 VisionLabelOps 的 CLI 和 API 链路。
 
-## 1. Create the environment
+## 1. 创建环境
 
-Windows PowerShell:
+Windows PowerShell：
 
 ```powershell
 cd D:\github_test_VisionLabelOps
@@ -16,7 +16,7 @@ python -m pip install --upgrade pip
 python -m pip install -e .[dev]
 ```
 
-Linux/macOS bash or zsh:
+Linux/macOS bash 或 zsh：
 
 ```bash
 cd /path/to/VisionLabelOps
@@ -26,7 +26,7 @@ python -m pip install --upgrade pip
 python -m pip install -e .[dev]
 ```
 
-## 2. Validate the install
+## 2. 验证安装
 
 ```bash
 python -m visionlabelops --version
@@ -34,7 +34,7 @@ vlo --help
 python examples/basic_api.py
 ```
 
-## 3. Run the smallest useful workflow
+## 3. 跑通最小工作流
 
 ```bash
 vlo stats --input ./examples/data/labelme-mini --format labelme --output ./tmp/stats --overwrite
@@ -42,13 +42,13 @@ vlo audit --input ./examples/data/labelme-mini --format labelme --output ./tmp/a
 vlo preview --input ./examples/data/labelme-mini --format labelme --output ./tmp/preview --samples 2 --seed 7 --overwrite
 ```
 
-## 4. Generate a report
+## 4. 生成报告
 
 ```bash
 vlo report --input ./examples/data/labelme-mini --format labelme --output ./tmp/report --overwrite
 ```
 
-## 5. Use script-friendly JSON output
+## 5. 使用适合自动化的 JSON 输出
 
 ```bash
 vlo audit \
@@ -60,7 +60,7 @@ vlo audit \
   --strict
 ```
 
-## 6. Convert and split
+## 6. 试一遍转换与划分
 
 ```bash
 vlo convert \
@@ -81,7 +81,7 @@ vlo split \
   --overwrite
 ```
 
-## 7. Minimal Python API example
+## 7. 最小 Python API 示例
 
 ```python
 from pathlib import Path
@@ -99,13 +99,19 @@ print(stats.annotation_count)
 print(audit.summary["issue_count"])
 ```
 
-## Outputs
+## 输出约定
 
-- `audit`: `result.json`
-- `stats`: `result.json`
-- `convert`: converted dataset + `result.json`
-- `split`: split dataset materialization + `result.json`
-- `preview`: annotated samples + `contact_sheet.jpg` + `result.json`
-- `report`: `report.md` + `report.html` + `result.json`
+- `audit`：`result.json`
+- `stats`：`result.json`
+- `convert`：转换后的数据集 + `result.json`
+- `split`：划分后的数据集 + `result.json`
+- `preview`：标注预览图 + `contact_sheet.jpg` + `result.json`
+- `report`：`report.md` + `report.html` + `result.json`
 
-`convert --dry-run` and `split --dry-run` do not create output directories or `result.json`.
+`convert --dry-run` 和 `split --dry-run` 不会创建输出目录，也不会写入 `result.json`。
+
+## 范围提醒
+
+- VisionLabelOps 当前是 detection-first 工具包，不是 segmentation、keypoint、tracking、GUI、Web 或训练框架项目。
+- Labelme 当前只支持 `rectangle` 和 `polygon`。
+- COCO 导入会跳过 `iscrowd=1`。

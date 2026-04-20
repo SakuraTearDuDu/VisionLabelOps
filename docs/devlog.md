@@ -32,6 +32,14 @@ All writes for this repository must stay within `D:\github_test_VisionLabelOps`.
 - Decision: upgrade GitHub Actions to `actions/checkout@v6` and `actions/setup-python@v6` after remote checks surfaced Node 20 deprecation warnings, so CI stays ahead of the June 2026 runtime cutover
 - Deferred: broader YOLO layout flexibility remains a later candidate rather than a V1 hardening task, because this round prioritizes stable behavior over wider heuristics
 
+## 2026-04-20 repository showcase and bilingual README polish
+
+- Changed: `README.md`, `README.zh-CN.md`, `docs/quickstart.md`, `docs/quickstart.zh-CN.md`, `docs/assets/*`, `docs/github_showcase_checklist.md`
+- Why: improve GitHub homepage presentation, add a maintainable Simplified Chinese entry, and prepare repository assets for social preview and release-page reuse
+- Result: the repository now has a clearer showcase-oriented README structure, a bilingual README/quickstart entry path, and ready-to-use README / social preview assets
+- Decision: keep bilingual maintenance limited to README and quickstart so the documentation surface stays sustainable instead of attempting full-site translation
+- Decision: use repository-generated preview assets plus a hand-authored SVG hero banner instead of a heavy external design workflow, so the showcase remains reproducible inside the repo
+
 ## Notes for future entries
 
 - Record only work done inside this workspace.
